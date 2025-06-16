@@ -62,8 +62,74 @@
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.2; }
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background-color: #0a0a0f;
     }
-    footer { font-size: 0.75rem; margin-top: 4rem; }
+    video {
+      position: fixed; top: 0; left: 0;
+      min-width: 100%; min-height: 100%;
+      object-fit: cover; z-index: 0;
+      filter: brightness(0.9) contrast(1.1) saturate(1.2);
+    }
+    .glass-overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+      backdrop-filter: blur(2px);
+      background: rgba(0,0,0,0.25);
+      pointer-events: none;
+      border-radius: 32px;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.5) 100%);
+      z-index: 2; pointer-events: none;
+    }
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 4rem 1rem;
+      text-align: center;
+      color: white;
+    }
+     .card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      border-radius: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+    details summary {
+      cursor: pointer;
+      padding: 0.75rem;
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    details[open] summary {
+      background-color: rgba(255,255,255,0.1);
+    }
+    .floating-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      display: flex; flex-direction: column;
+      gap: 10px; z-index: 9999;
+    }
+    .floating-btn img {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: white;
+      padding: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+     footer { font-size: 0.75rem; margin-top: 4rem; }
     .island-header {
       background: rgba(255,255,255,0.05);
       border-radius: 2rem;
@@ -72,10 +138,50 @@
       backdrop-filter: blur(6px);
       border: 1px solid rgba(255,255,255,0.08);
     }
+      island {
+      background-color: #1a1a1d;
+      border-radius: 9999px;
+      padding: 0.5rem 1.5rem;
+      box-shadow: 0 0 14px rgba(255,255,255,0.08);
+      width: 40vw;
+      max-width: 90%;
+    }
+     #jamRainbow {
+      background-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+    @media (min-width: 768px) {
+      .island {
+        width: 30vw;
+        max-width: 320px;
+      }
+    }
   </style>
 </head>
 <body onload="AOS.init()">
 
+  <!-- Island Head Jam -->
+  <div class="fixed top-5 left-1/2 -translate-x-1/2 island text-center text-sm font-semibold text-white/90 z-50">
+    <span id="clock" class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-yellow-400 animate-pulse"></span>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('id-ID', { hour12: false });
+      document.getElementById('clock').textContent = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>     
+
+  <!-- ISLAND HEADER -->
+  <div class="fixed top-2 left-1/2 -translate-x-1/2 z-50 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-lg px-4 py-2 text-sm font-semibold text-white w-[40vw] max-w-[320px] text-center">
+    <span id="jamRainbow">00:00:00</span>
+  </div>
+  
   <video autoplay muted loop playsinline>
     <source src="https://raw.githubusercontent.com/yuda2525/YZ01-site/main/istockphoto-461913676-640_adpp_is.mp4" type="video/mp4" />
   </video>
@@ -99,10 +205,11 @@
     </div>
     <div class="text-sm text-white/60 mt-3">*Hosting & responsive included</div>
 
-    <!-- Revisi -->
-    <div class="mt-8 text-white/80 text-sm max-w-xl mx-auto">
-      <strong>Syarat & Info Revisi:</strong> Semua paket memiliki batas revisi sesuai jenisnya. Tambahan revisi dikenakan biaya terpisah.
-    </div>
+<!-- S&K -->
+<p class="text-yellow-400 text-sm font-semibold mt-8 text-center italic">
+  *Syarat & Ketentuan: Revisi hanya berlaku maksimal 3 hari setelah proyek selesai.  
+  Melebihi batas waktu akan dikenakan biaya tambahan.
+</p>
 
     <!-- Testimoni autoplay blink -->
     <h2 class="text-2xl font-bold mt-20">Testimoni Klien</h2>
@@ -150,15 +257,6 @@
       background-color: #0a0a0f;
     }
 
-    .footer {
-      background-color: rgba(10, 10, 15, 0.7);
-      padding: 2rem;
-      text-align: center;
-      color: white;
-      backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
     .footer img {
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
@@ -183,29 +281,43 @@
   <p class="text-xs text-white/40">Powered by AI & Human Creativity</p>
 </footer>
 
-<html lang="id">
-<head>
-	  <!-- (Time) -->
-  <meta charset="UTF-8" />
-      <div id="clock" class="mt-6 text-lg font-semibold text-blue-300 animate-pulse"></div>
-    </div>
-  </section>
-
+  <!-- SCRIPT JAM -->
   <script>
-    function updateClock() {
-      const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-      const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    function updateTime() {
       const now = new Date();
-      now.setHours(now.getHours() + 7);
-      const d = days[now.getDay()], m = months[now.getMonth()];
-      const time = `${d}, ${now.getDate()} ${m} ${now.getFullYear()} | ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} WIB`;
-      document.getElementById("clock").textContent = time;
+      const jam = now.toLocaleTimeString('id-ID', { hour12: false });
+      document.getElementById('jamRainbow').innerText = jam;
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateTime, 1000);
+    updateTime();
   </script>
-</body>
-</html>
+  
+<!-- Toggle Share WA, FB, IG -->
+<div class="fixed bottom-6 right-5 z-50">
+  <button id="toggleBtn" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shadow-lg hover:bg-white/20 transition">
+    â†‘
+  </button>
+  <div id="shareIcons" class="flex flex-col gap-3 mt-3 items-center opacity-0 pointer-events-none transition-all duration-300">
+    <a href="https://wa.me/?text=https://yuda2525.github.io/YZ01-site/" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="w-10 h-10 rounded-full" />
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://yuda2525.github.io/YZ01-site/" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="FB" class="w-10 h-10 rounded-full" />
+    </a>
+    <a href="#" onclick="navigator.clipboard.writeText('https://yuda2525.github.io/YZ01-site/'); alert('Link IG disalin!');">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG" class="w-10 h-10 rounded-full" />
+    </a>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('toggleBtn');
+  const shareIcons = document.getElementById('shareIcons');
+  toggleBtn.addEventListener('click', () => {
+    shareIcons.classList.toggle('opacity-0');
+    shareIcons.classList.toggle('pointer-events-none');
+  });
+</script>
 
 </body>
 </html>
