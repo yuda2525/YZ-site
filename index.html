@@ -321,3 +321,63 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tanggal dengan Warna</title>
+<style>
+  .tanggal-container {
+    font-family: sans-serif;
+    font-size: 20px;
+    color: #333; /* Warna teks default */
+    text-align: center; /* Pusatkan teks */
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .hari {
+    color: #dc3545; /* Warna merah untuk hari */
+    font-weight: bold;
+  }
+
+  .tanggal {
+    color: #dc3545; /* Warna merah untuk tanggal */
+  font-weight: bold;
+   }
+
+  .bulan {
+    color: #dc3545; /* Warna merah untuk bulan */
+   font-weight: bold;
+   }
+  
+  .tahun {
+    color: #dc3545; /* Warna merah untuk tahun */
+   font-weight: bold;
+   }
+</style>
+</head>
+<body>
+
+<div class="tanggal-container">
+  <span class="hari"></span>,
+  <span class="tanggal"></span>
+  <span class="bulan"></span>
+  <span class="tahun"></span>
+</div>
+
+<script>
+  const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  const sekarang = new Date();
+  const hariIni = hari[sekarang.getDay()];
+  const tanggal = sekarang.getDate();
+  const bulanIni = bulan[sekarang.getMonth()];
+  const tahun = sekarang.getFullYear();
+
+  document.querySelector(".hari").textContent = hariIni;
+  document.querySelector(".tanggal").textContent = tanggal;
+  document.querySelector(".bulan").textContent = bulanIni;
+  document.querySelector(".tahun").textContent = tahun;
+</script>
+</body>
+</html>
