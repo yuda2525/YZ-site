@@ -29,18 +29,25 @@
       overflow-x: hidden;
     }
     video {
-      position: fixed; top: 0; left: 0;
-      min-width: 100%; min-height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
       object-fit: cover;
       z-index: 0;
-      filter: brightness(0.9) contrast(1.1) saturate(1.2);
+      filter: brightness(0.9) contrast(1.1) saturate(1.15);
     }
     .glass-overlay {
-      position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      backdrop-filter: blur(1.2px);
-      background: rgba(0,0,0,0.2);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
+      pointer-events: none;
+      backdrop-filter: blur(1.2px);
+      background: rgba(0, 0, 0, 0.2);
     }
     .content {
       position: relative;
@@ -49,7 +56,7 @@
       color: white;
       text-align: center;
     }
-    .card {
+     .card {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 1rem;
@@ -67,12 +74,6 @@
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
       background-color: #0a0a0f;
-    }
-    video {
-      position: fixed; top: 0; left: 0;
-      min-width: 100%; min-height: 100%;
-      object-fit: cover; z-index: 0;
-      filter: brightness(0.9) contrast(1.1) saturate(1.2);
     }
     .glass-overlay {
       position: fixed; top: 0; left: 0;
@@ -182,9 +183,12 @@
     <span id="jamRainbow">00:00:00</span>
   </div>
   
+  <!-- Video Background -->
   <video autoplay muted loop playsinline>
     <source src="https://raw.githubusercontent.com/yuda2525/YZ01-site/main/istockphoto-461913676-640_adpp_is.mp4" type="video/mp4" />
   </video>
+  
+  <!-- Glass Overlay -->
   <div class="glass-overlay"></div>
 
   <div class="content">
@@ -198,8 +202,8 @@
     <!-- Harga -->
     <h2 class="text-2xl font-bold mt-20">Paket Harga</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6 max-w-6xl mx-auto">
-      <div class="card">Basic<br>Rp350rb<br>1 Halaman · Revisi 1x · max 7 hari kerja</div>
-      <div class="card">Pro<br>Rp600rb<br>Up to 2 Halaman · Revisi 2x · max 7 hari kerja</div>
+      <div class="card">Basic<br>Rp350rb<br>1 Halaman · Revisi 1x · &plusmn; 7 hari kerja</div>
+      <div class="card">Pro<br>Rp600rb<br>Up to 2 Halaman · Revisi 2x · &plusmn; 7 hari kerja</div>
       <div class="card">Premium<br>Rp950rb<br>Landing Page Full · Revisi 3x</div>
       <div class="card">Custom<br>Start Rp1jt<br>Request desain · Timeline fleksibel</div>
     </div>
@@ -298,13 +302,13 @@
     <span id="arrowIcon">↑</span>
   </button>
   <div id="shareIcons" class="flex flex-col gap-3 mt-3 items-center opacity-0 pointer-events-none transition-all duration-300">
-    <a href="https://wa.me/?text=https://yuda2525.github.io/YZ01-site/" target="_blank">
+    <a href="https://wa.me/?text=https://yuda2525.github.io/YZ-site/" target="_blank">
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="w-10 h-10 rounded-full" />
     </a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://yuda2525.github.io/YZ01-site/" target="_blank">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://yuda2525.github.io/YZ-site/" target="_blank">
       <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="FB" class="w-10 h-10 rounded-full" />
     </a>
-    <a href="#" onclick="navigator.clipboard.writeText('https://yuda2525.github.io/YZ01-site/'); alert('Link IG disalin!');">
+    <a href="#" onclick="navigator.clipboard.writeText('https://yuda2525.github.io/YZ-site/'); alert('Link IG disalin!');">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="IG" class="w-10 h-10 rounded-full" />
     </a>
   </div>
