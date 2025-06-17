@@ -381,3 +381,146 @@
 </script>
 </body>
 </html>
+
+      <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Y&Z Audio Ring EQ Playlist</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    #mute-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 6px rgba(255,255,255,0.3);
+      z-index: 2;
+    }
+
+    canvas {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Tombol mute -->
+<button id="mute-btn">🔊</button>
+
+<!-- Canvas Equalizer -->
+<canvas id="eq-ring" width="120" height="120"></canvas>
+
+<!-- Audio Player -->
+<audio id="bg-audio" autoplay loop crossorigin="anonymous"></audio>
+
+<script>
+  const audio = document.getElementById("bg-audio");
+  const muteBtn = document.getElementById("mute-btn");
+  const canvas = document.getElementById("eq-ring");
+  const ctx = canvas.getContext("2d");
+
+  let audioCtx, gainNode, filter, sourceNode;
+  let initialized = false;
+
+  // Daftar musik (auto putar bergantian)
+  const tracks = [
+    "https://raw.githubusercontent.com/yuda2525/YZ-site/main/Baby%20I%20Love%20Your%20Way.m4a",
+    "https://raw.githubusercontent.com/yuda2525/YZ-site/main/Baby%20I%20Love%20Your%20Way.m4a",
+    "https://raw.githubusercontent.com/yuda2525/YZ-site/main/Baby%20I%20Love%20Your%20Way.m4a"
+  ];
+
+  let currentTrack = 0;
+
+  function playTrack(index) {
+    audio.src = tracks[index];
+    audio.play();
+  }
+
+  // EQ Ring effect
+  const bars = 24;
+  const radius = 35;
+  function drawEqualizer() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+
+    for (let i = 0; i < bars; i++) {
+      const angle = (Math.PI * 2 / bars) * i;
+      const barHeight = 8 + Math.sin(Date.now() / 200 + i) * 15;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x * 1.15, y * 1.15);
+      ctx.strokeStyle = "cyan";
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#0ff";
+      ctx.lineWidth = barHeight / 12;
+      ctx.stroke();
+    }
+
+    ctx.restore();
+    requestAnimationFrame(drawEqualizer);
+  }
+
+  drawEqualizer();
+
+  // Mute toggle
+  muteBtn.addEventListener("click", () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? "🔇" : "🔊";
+  });
+
+  // Ganti lagu setelah selesai
+  audio.addEventListener("ended", () => {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    playTrack(currentTrack);
+  });
+
+  // Inisialisasi WebAudio + main musik
+  document.addEventListener("click", () => {
+    if (!initialized) {
+      initialized = true;
+
+      // Setup Web Audio API
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      sourceNode = audioCtx.createMediaElementSource(audio);
+      gainNode = audioCtx.createGain();
+      filter = audioCtx.createBiquadFilter();
+
+      gainNode.gain.value = 0.3;
+      filter.type = "lowpass";
+      filter.frequency.value = 14000;
+
+      sourceNode.connect(gainNode);
+      gainNode.connect(filter);
+      filter.connect(audioCtx.destination);
+
+      playTrack(currentTrack); // mulai main track pertama
+    }
+  }, { once: true });
+</script>
+
+</body>
+</html>
